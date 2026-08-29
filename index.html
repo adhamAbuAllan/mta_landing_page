@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MTA — Find the right spare part. Faster.</title>
+<meta name="description" id="metaDesc" content="Create a request for the spare part you need, connect directly with matching suppliers, and get the right part without wasting time searching everywhere. Available on iOS and Android.">
+<meta property="og:title" content="MTA — Find the right spare part. Faster.">
+<meta property="og:description" content="Create a request, connect with suppliers who have what you need, and get it sorted in chat.">
+<meta property="og:image" content="assets/mta-hero-poster.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/mta-logo.png">
+<link rel="alternate" hreflang="en" href="?lang=en">
+<link rel="alternate" hreflang="he" href="?lang=he">
+<link rel="alternate" hreflang="ar" href="?lang=ar">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Heebo:wght@400;500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#07110E;
+  --ink-2:#16241F;
+  --green:#027A48;
+  --green-dark:#01603A;
+  --green-tint:#E6F2EC;
+  --bg:#F7F9F8;
+  --card:#FFFFFF;
+  --muted:#5C6B65;
+  --line:#E1E8E4;
+  --r:16px;
+  --maxw:1180px;
+  --tight:-.03em;
+  --tight-xl:-.04em;
+  --lh-body:1.5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--bg);color:var(--ink);
+  -webkit-font-smoothing:antialiased;line-height:var(--lh-body);
+}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:clamp(20px,5vw,40px);width:100%}
+
+/* ── RTL / script tuning ──────────────── */
+/* Hebrew and Arabic are never letter-spaced: Arabic letters join, and
+   negative tracking on Hebrew closes counters that need the room. */
+html[lang="he"]{--tight:0;--tight-xl:0;--lh-body:1.6}
+html[lang="ar"]{--tight:0;--tight-xl:0;--lh-body:1.75}
+html[lang="he"] body{font-family:'Heebo','Inter',system-ui,sans-serif}
+html[lang="ar"] body{font-family:'IBM Plex Sans Arabic','Noto Sans Arabic',system-ui,sans-serif;font-size:1.03em}
+[dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3,
+[dir="rtl"] .kicker,[dir="rtl"] .store .small,[dir="rtl"] .store .big{letter-spacing:0}
+[dir="rtl"] .kicker{text-transform:none}
+html[lang="ar"] h1,html[lang="ar"] h2{line-height:1.3}
+html[lang="ar"] h3{line-height:1.5}
+html[lang="he"] h1{line-height:1.12}
+html[lang="he"] h2{line-height:1.2}
+html[lang="ar"] .step p,html[lang="ar"] .lede,html[lang="ar"] .sec-sub{line-height:1.85}
+/* directional glyphs mirror; brand marks never do */
+[dir="rtl"] .arrow{transform:scaleX(-1)}
+bdi{unicode-bidi:isolate}
+
+/* ── header ───────────────────────────── */
+.site-header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(247,249,248,.82);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;height:70px}
+.logo{display:flex;align-items:center;flex:none}
+.logo img{height:42px;width:auto}
+.header-right{display:flex;align-items:center;gap:10px}
+nav{display:flex;align-items:center;gap:4px}
+nav a{
+  color:var(--ink);text-decoration:none;font-size:14px;font-weight:500;
+  padding:9px 14px;border-radius:10px;transition:background .18s,color .18s;white-space:nowrap;
+}
+nav a:hover{background:var(--green-tint);color:var(--green-dark)}
+nav a.cta{background:var(--ink);color:#fff;font-weight:600;padding:10px 20px;border-radius:999px}
+nav a.cta:hover{background:var(--green);color:#fff}
+
+/* language switcher */
+.lang{
+  display:flex;align-items:center;gap:2px;flex:none;
+  background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px;
+}
+.lang button{
+  font:inherit;font-size:13px;font-weight:600;line-height:1;
+  padding:7px 11px;border:0;border-radius:999px;background:transparent;color:var(--muted);
+  cursor:pointer;transition:background .18s,color .18s;
+}
+.lang button:hover{color:var(--ink)}
+.lang button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.lang button[lang="he"]{font-family:'Heebo',sans-serif}
+.lang button[lang="ar"]{font-family:'IBM Plex Sans Arabic',sans-serif}
+
+/* ── hero ─────────────────────────────── */
+.hero{
+  text-align:center;background:var(--bg);color:var(--ink);
+}
+.hero > .wrap{padding-block:clamp(48px,7vw,88px) clamp(28px,4vw,44px)}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--green-tint);color:var(--green-dark);
+  font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px;margin-bottom:26px;
+}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex:none;
+  box-shadow:0 0 0 0 rgba(2,122,72,.5);animation:pulse 2.4s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(2,122,72,0)}100%{box-shadow:0 0 0 0 rgba(2,122,72,0)}}
+h1{
+  font-size:clamp(37px,6.2vw,74px);line-height:1.03;letter-spacing:var(--tight-xl);font-weight:800;
+  max-width:16ch;margin-inline:auto;
+}
+h1 .accent{color:var(--green)}
+.lede{margin:24px auto 0;max-width:58ch;font-size:clamp(16px,1.55vw,19px);line-height:1.65;color:var(--muted)}
+
+/* ── store buttons ────────────────────── */
+.stores{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:36px}
+.store{
+  position:relative;
+  display:inline-flex;align-items:center;gap:12px;text-decoration:none;
+  padding-block:12px;padding-inline:20px 24px;border-radius:14px;
+  background:var(--ink);color:#fff;--ring:var(--green);
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+  box-shadow:0 6px 18px rgba(7,17,14,.15);
+}
+.store:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(7,17,14,.22);background:var(--ink-2)}
+.store svg{width:26px;height:26px;flex:none}
+.store span{display:block;line-height:1.22;text-align:start}
+.store .small{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.72}
+.store .big{font-size:16.5px;font-weight:600;letter-spacing:-.01em}
+.store--play{background:var(--green);--ring:#FFFFFF}
+.store--play:hover{background:var(--green-dark)}
+.avail{margin-top:20px;font-size:13.5px;color:var(--muted)}
+
+/* attention pulse — fired when Download is clicked and the buttons
+   are already on screen, so the click still has a visible result */
+.store::after{
+  content:"";position:absolute;inset:-3px;border-radius:17px;
+  border:2px solid var(--ring);opacity:0;pointer-events:none;
+}
+.store.is-attention{animation:attn .9s cubic-bezier(.22,1,.36,1) both}
+.store.is-attention::after{animation:attn-ring .9s ease-out both}
+@keyframes attn{
+  0%{transform:translateY(0) scale(1)}
+  20%{transform:translateY(-7px) scale(1.05)}
+  45%{transform:translateY(0) scale(1)}
+  62%{transform:translateY(-3px) scale(1.02)}
+  100%{transform:translateY(0) scale(1)}
+}
+@keyframes attn-ring{
+  0%{opacity:0;transform:scale(.95)}
+  25%{opacity:1}
+  100%{opacity:0;transform:scale(1.16)}
+}
+
+/* ── hero video ───────────────────────── */
+.stage{height:calc(100svh - 70px);padding:0}
+.video-card{
+  height:100%;border-radius:0;overflow:hidden;background:#04120C;
+  box-shadow:none;
+}
+.video-card video{width:100%;height:100%;display:block;object-fit:cover}
+
+/* ── sections ─────────────────────────── */
+section{scroll-margin-top:88px}
+.sec-head{text-align:center;max-width:62ch;margin-inline:auto;margin-bottom:clamp(36px,5vw,56px)}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:14px}
+h2{font-size:clamp(28px,3.9vw,46px);line-height:1.1;letter-spacing:var(--tight);font-weight:800}
+.sec-sub{margin-top:16px;color:var(--muted);font-size:clamp(15px,1.4vw,17.5px);line-height:1.6}
+
+.how{padding:clamp(64px,8vw,104px) 0;background:var(--card);border-block:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,28px)}
+.step{
+  background:var(--bg);border:1px solid var(--line);border-radius:var(--r);
+  padding:clamp(24px,2.6vw,32px);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+}
+.step:hover{transform:translateY(-4px);border-color:rgba(2,122,72,.32);box-shadow:0 16px 34px -18px rgba(7,17,14,.3)}
+.step-num{font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--green);
+  display:flex;align-items:center;gap:10px;margin-bottom:18px;direction:ltr}
+[dir="rtl"] .step-num{flex-direction:row-reverse}
+.step-num::after{content:"";flex:1;height:1px;background:var(--line)}
+.step h3{font-size:19.5px;font-weight:700;letter-spacing:var(--tight);margin-bottom:10px}
+.step p{color:var(--muted);font-size:15px;line-height:1.62}
+
+.capabilities{margin-top:clamp(32px,4vw,48px);display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.cap{display:inline-flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);
+  border-radius:999px;padding:9px 16px;font-size:13.5px;color:var(--ink);font-weight:500}
+.cap svg{width:14px;height:14px;color:var(--green);flex:none}
+
+/* ── marketplace ──────────────────────── */
+.market{padding:clamp(64px,8vw,104px) 0}
+.market-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.4vw,28px)}
+.mcard{
+  background:var(--card);border:1px solid var(--line);border-radius:20px;
+  padding:clamp(28px,3.2vw,40px);display:flex;flex-direction:column;
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.mcard:hover{transform:translateY(-4px);box-shadow:0 20px 44px -22px rgba(7,17,14,.34)}
+.mcard--dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mcard-icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
+  background:var(--green-tint);color:var(--green-dark);margin-bottom:22px}
+.mcard--dark .mcard-icon{background:rgba(2,122,72,.22);color:#5FD3A0}
+.mcard-icon svg{width:26px;height:26px}
+.mcard h3{font-size:clamp(21px,2.1vw,26px);font-weight:800;letter-spacing:var(--tight)}
+.mcard .role-sub{margin-top:8px;font-size:15px;color:var(--muted)}
+.mcard--dark .role-sub{color:rgba(255,255,255,.62)}
+.mlist{list-style:none;margin-block:24px 30px;display:grid;gap:13px}
+.mlist li{display:flex;align-items:flex-start;gap:11px;font-size:15.2px;line-height:1.55}
+html[lang="ar"] .mlist li{line-height:1.75}
+.mlist svg{width:17px;height:17px;flex:none;margin-top:3px;color:var(--green)}
+.mcard--dark .mlist svg{color:#5FD3A0}
+.mlink{
+  margin-top:auto;display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
+  font-weight:600;font-size:15.5px;text-decoration:none;color:var(--green-dark);
+  padding:12px 22px;border-radius:999px;background:var(--green-tint);transition:.2s;
+}
+.mlink .arrow{display:inline-block;transition:transform .2s}
+.mlink:hover{background:var(--green);color:#fff;gap:14px}
+.mcard--dark .mlink{background:var(--green);color:#fff}
+.mcard--dark .mlink:hover{background:#fff;color:var(--ink)}
+
+/* ── final cta ────────────────────────── */
+.final{padding:clamp(56px,7vw,88px) 0 clamp(64px,8vw,96px)}
+.final-inner{
+  background:var(--ink);color:#fff;border-radius:24px;
+  padding-block:clamp(40px,5.5vw,72px);padding-inline:clamp(24px,4vw,56px);
+  text-align:center;position:relative;overflow:hidden;
+}
+.final-inner::before{
+  content:"";position:absolute;width:460px;height:460px;border-radius:50%;
+  background:radial-gradient(circle,rgba(2,122,72,.55),transparent 66%);
+  top:-190px;inset-inline-end:-120px;pointer-events:none;
+}
+.final-inner h2{font-size:clamp(27px,3.6vw,44px);position:relative}
+.final-inner p{margin:16px auto 0;max-width:52ch;color:rgba(255,255,255,.66);font-size:16.5px;position:relative}
+.final .stores{position:relative}
+.final .store{background:#fff;color:var(--ink);box-shadow:none;--ring:var(--green)}
+.final .store:hover{background:#EDF3F0}
+.final .store--play{background:var(--green);color:#fff;--ring:#FFFFFF}
+.final .store--play:hover{background:#039A5B}
+
+/* ── footer ───────────────────────────── */
+footer{border-top:1px solid var(--line);padding-block:30px 40px}
+.foot-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.foot-inner img{height:34px;width:auto;opacity:.85}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px}
+.foot-links a{color:var(--muted);text-decoration:none}
+.foot-links a:hover{color:var(--green)}
+.copy{font-size:13px;color:var(--muted)}
+
+/* ── responsive ───────────────────────── */
+@media (max-width:980px){
+  nav a:not(.cta){display:none}
+}
+@media (max-width:900px){
+  .steps{grid-template-columns:1fr}
+  .market-grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .header-inner{height:62px;gap:8px}
+  .logo img{height:32px}
+  nav a.cta{padding:9px 16px;font-size:13.5px}
+  .lang button{padding:6px 9px;font-size:12.5px}
+  h1{max-width:100%}
+  .store{flex:1 1 100%;justify-content:center}
+  .stage{height:calc(100svh - 62px)}
+  .hero > .wrap{padding-block:36px 28px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto}
+  /* no motion, but the click still needs a visible result */
+  .store.is-attention{outline:3px solid var(--ring);outline-offset:3px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="logo" href="#top"><img src="assets/mta-logo.png" alt="MTA"></a>
+
+    <div class="header-right">
+      <nav>
+        <a href="#how" data-i18n="nav.how">How it works</a>
+        <a href="#market" data-i18n="nav.suppliers">For Suppliers</a>
+        <a class="cta" href="#download" data-i18n="nav.download">Download</a>
+      </nav>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="he" lang="he" aria-pressed="false">עב</button>
+        <button type="button" data-lang="ar" lang="ar" aria-pressed="false">ع</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <!-- HERO VIDEO -->
+    <div class="stage" aria-hidden="true">
+      <div class="video-card">
+        <video src="assets/mta-hero.mp4" poster="assets/mta-hero-poster.jpg"
+               autoplay muted loop playsinline preload="metadata"
+               aria-label="MTA app walkthrough"></video>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <h1><span data-i18n="hero.h1a">Find the right spare part.</span> <span class="accent" data-i18n="hero.h1b">Faster.</span></h1>
+      <p class="lede" data-i18n="hero.lede">Tell us what you need, choose your vehicle, add photos, and connect directly with suppliers who can help — without wasting time searching everywhere.</p>
+
+      <div class="stores" id="download">
+        <a class="store" href="https://apps.apple.com/us/app/mta-%D7%A9%D7%95%D7%A7-%D7%97%D7%9C%D7%A7%D7%99-%D7%97%D7%99%D7%9C%D7%95%D7%A3-%D7%9C%D7%A8%D7%9B%D7%91/id6776418788" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.36 12.66c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.75 2.28-1.6 2.78-.41 6.89 1.15 9.14.76 1.1 1.67 2.34 2.86 2.29 1.15-.05 1.58-.74 2.97-.74s1.78.74 2.99.72c1.24-.02 2.02-1.12 2.78-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.41-3.66zM14.1 5.9c.63-.77 1.06-1.83.94-2.9-.91.04-2.02.61-2.67 1.37-.58.68-1.09 1.77-.95 2.81 1.02.08 2.06-.52 2.68-1.28z"/></svg>
+          <span><span class="small" data-i18n="store.appleSmall">Download on the</span><span class="big">App Store</span></span>
+        </a>
+        <a class="store store--play" href="https://play.google.com/store/apps/details?id=com.mta_spare_auto" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 2.3c-.26.28-.4.7-.4 1.25v16.9c0 .55.14.97.4 1.25l.07.06 9.47-9.47v-.22L3.67 2.6l-.07-.3zM16.5 15.2l-3.16-3.16v-.22l3.16-3.16.07.04 3.74 2.13c1.07.6 1.07 1.6 0 2.21l-3.74 2.12-.07.04zM15.6 16.1l-3.23-3.23-9.53 9.53c.35.37.93.42 1.59.05l11.17-6.35zM15.6 7.9L4.43 1.55c-.66-.37-1.24-.32-1.59.05l9.53 9.53L15.6 7.9z"/></svg>
+          <span><span class="small" data-i18n="store.playSmall">Get it on</span><span class="big">Google Play</span></span>
+        </a>
+      </div>
+      <p class="avail" data-i18n-html="hero.avail">Available on iOS &amp; Android</p>
+    </div>
+  </section>
+
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker" data-i18n-html="how.kicker">How MTA works</div>
+        <h2 data-i18n="how.h2">Find your part in 3 simple steps</h2>
+      </div>
+
+      <div class="steps">
+        <article class="step">
+          <div class="step-num">01</div>
+          <h3 data-i18n="step1.h">Create your request</h3>
+          <p data-i18n="step1.p">Tell us what spare part you need, add your vehicle details, photos and city.</p>
+        </article>
+        <article class="step">
+          <div class="step-num">02</div>
+          <h3 data-i18n="step2.h">Connect with suppliers</h3>
+          <p data-i18n="step2.p">Your request reaches relevant spare-part suppliers who stock what you're looking for.</p>
+        </article>
+        <article class="step">
+          <div class="step-num">03</div>
+          <h3 data-i18n="step3.h">Chat &amp; get it sorted</h3>
+          <p data-i18n="step3.p">Discuss the Supplier directly, receive messages and follow the request until it's handled.</p>
+        </article>
+      </div>
+
+      <div class="capabilities">
+        <span class="cap"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n="cap1">Text, image &amp; voice chat</span></span>
+        <span class="cap"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n="cap2">Push notifications</span></span>
+        <span class="cap"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n="cap4">Supplier profiles</span></span>
+        <span class="cap"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n-html="cap5">Direct <bdi>WhatsApp</bdi> contact</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKETPLACE -->
+  <section class="market" id="market">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker" data-i18n="market.kicker">The marketplace</div>
+        <h2 data-i18n="market.h2">One place. Buyers and suppliers.</h2>
+        <p class="sec-sub" data-i18n-html="market.sub">MTA connects the people looking for a part with the people who already have it on the shelf.</p>
+      </div>
+
+      <div class="market-grid">
+        <article class="mcard">
+          <div class="mcard-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.6-4.8A2 2 0 016.5 7h11a2 2 0 011.9 1.2L21 13v5a1 1 0 01-1 1h-1a1 1 0 01-1-1v-1H6v1a1 1 0 01-1 1H4a1 1 0 01-1-1v-5z"/><circle cx="7" cy="15" r="1"/><circle cx="17" cy="15" r="1"/></svg>
+          </div>
+          <h3 data-i18n="buyers.h">For Buyers</h3>
+          <p class="role-sub" data-i18n="buyers.sub">Need a spare part?</p>
+          <ul class="mlist">
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="buyers.1">Create detailed requests</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="buyers.2">Add vehicle information</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="buyers.3">Upload photos of the part</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="buyers.4">Chat directly with suppliers</span></li>
+          </ul>
+          <a class="mlink" href="#download"><span data-i18n="buyers.cta">Find your part</span><span class="arrow">→</span></a>
+        </article>
+
+        <article class="mcard mcard--dark">
+          <div class="mcard-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 00-5.4 5.4l-5.6 5.6a1.5 1.5 0 002.1 2.1l5.6-5.6a4 4 0 005.4-5.4l-2.4 2.4-2.1-2.1 2.4-2.4z"/></svg>
+          </div>
+          <h3 data-i18n="sup.h">For Suppliers</h3>
+          <p class="role-sub" data-i18n="sup.sub">Have spare parts to offer?</p>
+          <ul class="mlist">
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.1">Discover relevant requests</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.2">View full vehicle details</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.3">Contact potential buyers</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.4">Chat directly in the app</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.5">Manage your opportunities</span></li>
+          </ul>
+          <a class="mlink" href="#download"><span data-i18n-html="sup.cta">Join MTA</span><span class="arrow">→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final">
+    <div class="wrap">
+      <div class="final-inner">
+        <h2 data-i18n="final.h">Stop searching. Start requesting.</h2>
+        <p data-i18n-html="final.p">Download MTA and post your first spare-part request in under a minute.</p>
+        <div class="stores">
+          <a class="store" href="https://apps.apple.com/us/app/mta-%D7%A9%D7%95%D7%A7-%D7%97%D7%9C%D7%A7%D7%99-%D7%97%D7%99%D7%9C%D7%95%D7%A3-%D7%9C%D7%A8%D7%9B%D7%91/id6776418788" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.36 12.66c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.75 2.28-1.6 2.78-.41 6.89 1.15 9.14.76 1.1 1.67 2.34 2.86 2.29 1.15-.05 1.58-.74 2.97-.74s1.78.74 2.99.72c1.24-.02 2.02-1.12 2.78-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.41-3.66zM14.1 5.9c.63-.77 1.06-1.83.94-2.9-.91.04-2.02.61-2.67 1.37-.58.68-1.09 1.77-.95 2.81 1.02.08 2.06-.52 2.68-1.28z"/></svg>
+            <span><span class="small" data-i18n="store.appleSmall">Download on the</span><span class="big">App Store</span></span>
+          </a>
+          <a class="store store--play" href="https://play.google.com/store/apps/details?id=com.mta_spare_auto" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 2.3c-.26.28-.4.7-.4 1.25v16.9c0 .55.14.97.4 1.25l.07.06 9.47-9.47v-.22L3.67 2.6l-.07-.3zM16.5 15.2l-3.16-3.16v-.22l3.16-3.16.07.04 3.74 2.13c1.07.6 1.07 1.6 0 2.21l-3.74 2.12-.07.04zM15.6 16.1l-3.23-3.23-9.53 9.53c.35.37.93.42 1.59.05l11.17-6.35zM15.6 7.9L4.43 1.55c-.66-.37-1.24-.32-1.59.05l9.53 9.53L15.6 7.9z"/></svg>
+            <span><span class="small" data-i18n="store.playSmall">Get it on</span><span class="big">Google Play</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <img src="assets/mta-logo.png" alt="MTA">
+    <div class="foot-links">
+      <a href="#how" data-i18n="nav.how">How it works</a>
+      <a href="#market" data-i18n="nav.suppliers">For Suppliers</a>
+      <a href="#download" data-i18n="nav.download">Download</a>
+      <a href="mailto:adhamallan4@gmail.com" data-i18n="nav.contact">Contact</a>
+    </div>
+    <div class="copy" data-i18n-html="footer.copy">© 2026 MTA. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en:{
+    dir:"ltr",
+    "meta.title":"MTA — Find the right spare part. Faster.",
+    "meta.desc":"Create a request for the spare part you need, connect directly with matching suppliers, and get the right part without wasting time searching everywhere.",
+    "nav.how":"How it works","nav.suppliers":"For Suppliers","nav.download":"Download","nav.contact":"Contact",
+    "hero.eyebrow":"Your spare part is just a request away",
+    "hero.h1a":"Find the right spare part.","hero.h1b":"Faster.",
+    "hero.lede":"Tell us what you need, choose your vehicle, add photos, and connect directly with suppliers who can help — without wasting time searching everywhere.",
+    "hero.avail":"Available on <bdi>iOS</bdi> &amp; <bdi>Android</bdi>",
+    "store.appleSmall":"Download on the","store.playSmall":"Get it on",
+    "how.kicker":"How <bdi>MTA</bdi> works","how.h2":"Find your part in 3 simple steps",
+    "step1.h":"Create your request","step1.p":"Tell us what spare part you need, add your vehicle details, photos and city.",
+    "step2.h":"Connect with suppliers","step2.p":"Your request reaches relevant spare-part suppliers who stock what you're looking for.",
+    "step3.h":"Chat & get it sorted","step3.p":"Discuss the Supplier directly, receive messages and follow the request until it's handled.",
+    "cap1":"Text, image & voice chat","cap2":"Push notifications",
+    "cap4":"Supplier profiles","cap5":"Direct <bdi>WhatsApp</bdi> contact",
+    "market.kicker":"The marketplace","market.h2":"One place. Buyers and suppliers.",
+    "market.sub":"<bdi>MTA</bdi> connects the people looking for a part with the people who already have it on the shelf.",
+    "buyers.h":"For Buyers","buyers.sub":"Need a spare part?",
+    "buyers.1":"Create detailed requests","buyers.2":"Add vehicle information","buyers.3":"Upload photos of the part",
+    "buyers.4":"Chat directly with suppliers",
+    "buyers.cta":"Find your part",
+    "sup.h":"For Suppliers","sup.sub":"Have spare parts to offer?",
+    "sup.1":"Discover relevant requests","sup.2":"View full vehicle details","sup.3":"Contact potential buyers",
+    "sup.4":"Chat directly in the app","sup.5":"Manage your opportunities",
+    "sup.cta":"Join <bdi>MTA</bdi>",
+    "final.h":"Stop searching. Start requesting.",
+    "final.p":"Download <bdi>MTA</bdi> and post your first spare-part request in under a minute.",
+    "footer.copy":"© 2026 <bdi>MTA</bdi>. All rights reserved."
+  },
+  he:{
+    dir:"rtl",
+    "meta.title":"MTA — מצא את חלק החילוף הנכון. מהר יותר.",
+    "meta.desc":"צור בקשה לחלק החילוף שאתה צריך, התחבר ישירות לספקים מתאימים וקבל את החלק הנכון בלי לבזבז זמן בחיפושים.",
+    "nav.how":"איך זה עובד","nav.suppliers":"לספקים","nav.download":"הורדה","nav.contact":"צור קשר",
+    "hero.eyebrow":"החלק שאתה מחפש נמצא במרחק בקשה אחת",
+    "hero.h1a":"מצא את חלק החילוף הנכון.","hero.h1b":"מהר יותר.",
+    "hero.lede":"ספר לנו מה אתה צריך, בחר את הרכב שלך, הוסף תמונות, והתחבר ישירות לספקים שיכולים לעזור — בלי לבזבז זמן בחיפושים בכל מקום.",
+    "hero.avail":"זמין ב־<bdi>iOS</bdi> ו־<bdi>Android</bdi>",
+    "store.appleSmall":"הורד מ־","store.playSmall":"זמין ב־",
+    "how.kicker":"איך <bdi>MTA</bdi> עובד","how.h2":"מצא את החלק שלך ב־3 שלבים פשוטים",
+    "step1.h":"צור בקשה","step1.p":"ספר לנו איזה חלק חילוף אתה צריך, הוסף את פרטי הרכב, תמונות ועיר.",
+    "step2.h":"התחבר לספקים","step2.p":"הבקשה שלך מגיעה לספקי חלקי חילוף רלוונטיים שמחזיקים את מה שאתה מחפש.",
+    "step3.h":"שוחח וסגור עניין","step3.p":"דבר עם הספק ישירות, קבל הודעות ועקוב אחרי הבקשה עד לסגירתה.",
+    "cap1":"צ׳אט טקסט, תמונה וקול","cap2":"התראות בזמן אמת",
+    "cap4":"פרופילי ספקים","cap5":"יצירת קשר ישירה ב<bdi>WhatsApp</bdi>",
+    "market.kicker":"השוק","market.h2":"מקום אחד. קונים וספקים.",
+    "market.sub":"<bdi>MTA</bdi> מחבר בין מי שמחפש חלק לבין מי שכבר מחזיק אותו על המדף.",
+    "buyers.h":"לקונים","buyers.sub":"צריך חלק חילוף?",
+    "buyers.1":"צור בקשות מפורטות","buyers.2":"הוסף פרטי רכב","buyers.3":"העלה תמונות של החלק",
+    "buyers.4":"שוחח ישירות עם ספקים",
+    "buyers.cta":"מצא את החלק שלך",
+    "sup.h":"לספקים","sup.sub":"יש לך חלקי חילוף להציע?",
+    "sup.1":"גלה בקשות רלוונטיות","sup.2":"צפה בפרטי הרכב המלאים","sup.3":"צור קשר עם קונים פוטנציאליים",
+    "sup.4":"שוחח ישירות באפליקציה","sup.5":"נהל את ההזדמנויות שלך",
+    "sup.cta":"הצטרף ל־<bdi>MTA</bdi>",
+    "final.h":"די לחפש. תתחיל לבקש.",
+    "final.p":"הורד את <bdi>MTA</bdi> ופרסם את בקשת חלק החילוף הראשונה שלך בפחות מדקה.",
+    "footer.copy":"© 2026 <bdi>MTA</bdi>. כל הזכויות שמורות."
+  },
+  ar:{
+    dir:"rtl",
+    "meta.title":"MTA — اعثر على قطعة الغيار المناسبة. أسرع.",
+    "meta.desc":"أنشئ طلبًا لقطعة الغيار التي تحتاجها، وتواصل مباشرة مع الموردين المناسبين، واحصل على القطعة الصحيحة دون إضاعة الوقت في البحث.",
+    "nav.how":"كيف يعمل","nav.suppliers":"للموردين","nav.download":"تحميل","nav.contact":"اتصل بنا",
+    "hero.eyebrow":"قطعة الغيار التي تبحث عنها على بُعد طلب واحد",
+    "hero.h1a":"اعثر على قطعة الغيار المناسبة.","hero.h1b":"أسرع.",
+    "hero.lede":"أخبرنا بما تحتاجه، واختر سيارتك، وأضف الصور، وتواصل مباشرة مع الموردين القادرين على مساعدتك — دون إضاعة الوقت في البحث في كل مكان.",
+    "hero.avail":"متوفر على <bdi>iOS</bdi> و<bdi>Android</bdi>",
+    "store.appleSmall":"حمِّل من","store.playSmall":"احصل عليه من",
+    "how.kicker":"كيف يعمل <bdi>MTA</bdi>","how.h2":"اعثر على قطعتك في 3 خطوات بسيطة",
+    "step1.h":"أنشئ طلبك","step1.p":"أخبرنا بقطعة الغيار التي تحتاجها، وأضف تفاصيل مركبتك والصور والمدينة.",
+    "step2.h":"تواصل مع الموردين","step2.p":"يصل طلبك إلى موردي قطع الغيار المعنيين الذين يوفرون ما تبحث عنه.",
+    "step3.h":"تحدّث وأنجز الأمر","step3.p":"تحدّث مع المورد مباشرة، واستقبل الرسائل وتابع الطلب حتى إتمامه.",
+    "cap1":"دردشة نصية وصورية وصوتية","cap2":"إشعارات فورية",
+    "cap4":"ملفات الموردين","cap5":"تواصل مباشر عبر <bdi>WhatsApp</bdi>",
+    "market.kicker":"السوق","market.h2":"مكان واحد. مشترون وموردون.",
+    "market.sub":"يربط <bdi>MTA</bdi> بين من يبحث عن قطعة ومن يملكها بالفعل على الرف.",
+    "buyers.h":"للمشترين","buyers.sub":"هل تحتاج قطعة غيار؟",
+    "buyers.1":"أنشئ طلبات مفصّلة","buyers.2":"أضف معلومات المركبة","buyers.3":"ارفع صور القطعة",
+    "buyers.4":"تحدّث مباشرة مع الموردين",
+    "buyers.cta":"اعثر على قطعتك",
+    "sup.h":"للموردين","sup.sub":"هل لديك قطع غيار لتقديمها؟",
+    "sup.1":"اكتشف الطلبات المناسبة","sup.2":"اطّلع على تفاصيل المركبة كاملة","sup.3":"تواصل مع المشترين المحتملين",
+    "sup.4":"تحدّث مباشرة داخل التطبيق","sup.5":"أدر فرصك",
+    "sup.cta":"انضم إلى <bdi>MTA</bdi>",
+    "final.h":"توقّف عن البحث. ابدأ بالطلب.",
+    "final.p":"حمّل <bdi>MTA</bdi> وانشر أول طلب قطعة غيار خلال أقل من دقيقة.",
+    "footer.copy":"© 2026 <bdi>MTA</bdi>. جميع الحقوق محفوظة."
+  }
+};
+
+function setLang(lang){
+  const dict = I18N[lang] || I18N.en;
+  const html = document.documentElement;
+  html.setAttribute('lang', lang);
+  html.setAttribute('dir', dict.dir);
+
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const v = dict[el.dataset.i18n];
+    if (v != null) el.textContent = v;
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const v = dict[el.dataset.i18nHtml];
+    if (v != null) el.innerHTML = v;
+  });
+
+  document.title = dict['meta.title'];
+  const md = document.getElementById('metaDesc');
+  if (md) md.setAttribute('content', dict['meta.desc']);
+
+  document.querySelectorAll('.lang button').forEach(b=>{
+    b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
+  });
+}
+
+document.querySelectorAll('.lang button').forEach(b=>{
+  b.addEventListener('click', ()=> setLang(b.dataset.lang));
+});
+
+// initial language: ?lang= param, else browser preference, else English
+(function(){
+  const p = new URLSearchParams(location.search).get('lang');
+  const nav = (navigator.language || 'en').slice(0,2).toLowerCase();
+  const pick = I18N[p] ? p : (I18N[nav] ? nav : 'en');
+  if (pick !== 'en') setLang(pick);
+})();
+
+
+/* ── Download links ───────────────────────────────────────────────
+   Every link pointing at #download (header nav, footer, and the two
+   marketplace card CTAs) scrolls the hero store buttons into view.
+   If they are already on screen there is nothing to scroll, so the
+   buttons pulse instead — a click always produces a visible result. */
+(function(){
+  const row    = document.getElementById('download');
+  const header = document.querySelector('.site-header');
+  if (!row) return;
+  const buttons = Array.from(row.querySelectorAll('.store'));
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const headerH = () => (header ? header.offsetHeight : 0);
+
+  function onScreen(el){
+    const r = el.getBoundingClientRect();
+    return r.top >= headerH() - 1 && r.bottom <= window.innerHeight + 1;
+  }
+
+  function pulse(){
+    buttons.forEach((btn, i) => {
+      btn.classList.remove('is-attention');
+      void btn.offsetWidth;               // force reflow so it can replay
+      window.setTimeout(() => {
+        btn.classList.add('is-attention');
+        // animationend never fires under reduced motion, so always time out too
+        window.setTimeout(() => btn.classList.remove('is-attention'), 1200);
+      }, i * 90);
+    });
+  }
+
+  // fires once, whether the browser supports scrollend or not
+  function whenSettled(done){
+    let fired = false;
+    const run = () => { if (!fired) { fired = true; cleanup(); done(); } };
+    let last = window.scrollY, still = 0;
+    const timer = window.setInterval(() => {
+      const y = window.scrollY;
+      still = Math.abs(y - last) < 1 ? still + 1 : 0;
+      last = y;
+      if (still >= 3) run();
+    }, 60);
+    const bail = window.setTimeout(run, 1800);
+    function cleanup(){ window.clearInterval(timer); window.clearTimeout(bail); }
+  }
+
+  document.querySelectorAll('a[href="#download"]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+
+      if (onScreen(row)) { pulse(); return; }
+
+      // sit the buttons just under the sticky header; snap to the very
+      // top of the page when that lands close to it anyway
+      let target = window.scrollY + row.getBoundingClientRect().top - headerH() - 32;
+      if (target < 80) target = 0;
+
+      window.scrollTo({
+        top: Math.max(0, target),
+        behavior: reduced.matches ? 'auto' : 'smooth'
+      });
+      whenSettled(pulse);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
