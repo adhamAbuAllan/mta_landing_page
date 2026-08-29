@@ -266,7 +266,11 @@ footer{border-top:1px solid var(--line);padding-block:30px 40px}
   .lang button{padding:6px 9px;font-size:12.5px}
   h1{max-width:100%}
   .store{flex:1 1 100%;justify-content:center}
-  .stage{height:calc(100svh - 62px)}
+  /* The walkthrough is landscape. Preserve its full frame on phones
+     instead of cropping the app UI and text into a tall viewport. */
+  .stage{height:auto}
+  .video-card{height:auto;aspect-ratio:16 / 9}
+  .video-card video{object-fit:contain}
   .hero > .wrap{padding-block:36px 28px}
 }
 @media (prefers-reduced-motion:reduce){
