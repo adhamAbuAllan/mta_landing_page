@@ -9,7 +9,8 @@
 <meta property="og:description" content="Create a request, connect with suppliers who have what you need, and get it sorted in chat.">
 <meta property="og:image" content="assets/mta-hero-poster.jpg">
 <meta property="og:type" content="website">
-<link rel="icon" href="assets/mta_logo_source.png">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="alternate" hreflang="en" href="?lang=en">
 <link rel="alternate" hreflang="he" href="?lang=he">
 <link rel="alternate" hreflang="ar" href="?lang=ar">
@@ -100,7 +101,7 @@ nav a.cta:hover{background:var(--green);color:#fff}
 .hero{
   text-align:center;background:var(--bg);color:var(--ink);
 }
-.hero > .wrap{padding-block:clamp(48px,7vw,88px) clamp(28px,4vw,44px)}
+.hero > .wrap:first-child{padding-block:clamp(40px,5.5vw,72px) clamp(28px,3.5vw,40px)}
 .eyebrow{
   display:inline-flex;align-items:center;gap:9px;
   background:var(--green-tint);color:var(--green-dark);
@@ -129,7 +130,8 @@ h1 .accent{color:var(--green)}
 .store:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(7,17,14,.22);background:var(--ink-2)}
 .store svg{width:26px;height:26px;flex:none}
 .store span{display:block;line-height:1.22;text-align:start}
-.store .small{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.72}
+.store .small{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.88}
+.store--play .small{opacity:1}
 .store .big{font-size:16.5px;font-weight:600;letter-spacing:-.01em}
 .store--play{background:var(--green);--ring:#FFFFFF}
 .store--play:hover{background:var(--green-dark)}
@@ -156,13 +158,39 @@ h1 .accent{color:var(--green)}
   100%{opacity:0;transform:scale(1.16)}
 }
 
+/* hero: problem → promise → proof points → action, all above the fold */
+.hero-points{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin:22px auto 0;max-width:62ch}
+.hero-points li{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;color:var(--ink)}
+.hero-points svg{width:17px;height:17px;flex:none;color:var(--green)}
+.hero-secondary{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:14.5px;font-weight:600;
+  color:var(--green-dark);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;border-radius:6px;padding:4px 6px}
+.hero-secondary:hover{color:var(--green)}
+.hero-secondary .arrow-down{display:inline-block;transition:transform .2s}
+.hero-secondary:hover .arrow-down{transform:translateY(3px)}
+
 /* ── hero video ───────────────────────── */
-.stage{height:calc(100svh - 70px);padding:0}
+.stage{padding-block:clamp(8px,2vw,16px) clamp(56px,7vw,88px)}
 .video-card{
-  height:100%;border-radius:0;overflow:hidden;background:#04120C;
-  box-shadow:none;
+  position:relative;aspect-ratio:16 / 9;border-radius:22px;overflow:hidden;background:#04120C;
+  box-shadow:0 30px 60px -30px rgba(7,17,14,.45);
 }
 .video-card video{width:100%;height:100%;display:block;object-fit:cover}
+.video-toggle{
+  position:absolute;inset-block-end:14px;inset-inline-end:14px;
+  display:inline-flex;align-items:center;gap:7px;
+  font:inherit;font-size:13px;font-weight:600;color:#fff;cursor:pointer;
+  background:rgba(7,17,14,.72);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:8px 14px;min-height:40px;
+}
+.video-toggle:hover{background:rgba(7,17,14,.9)}
+.video-toggle svg{width:14px;height:14px}
+.video-toggle .i-play{display:none}
+.video-toggle[aria-pressed="true"] .i-play{display:block}
+.video-toggle[aria-pressed="true"] .i-pause{display:none}
+
+/* ── keyboard focus ───────────────────── */
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+.mcard--dark a:focus-visible,.final a:focus-visible,.video-toggle:focus-visible{outline-color:#5FD3A0}
 
 /* ── sections ─────────────────────────── */
 section{scroll-margin-top:88px}
@@ -215,7 +243,7 @@ html[lang="ar"] .mlist li{line-height:1.75}
 .mlink{
   margin-top:auto;display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
   font-weight:600;font-size:15.5px;text-decoration:none;color:var(--green-dark);
-  padding:12px 22px;border-radius:999px;background:var(--green-tint);transition:.2s;
+  padding:12px 22px;border-radius:999px;background:var(--green-tint);transition:background .2s,color .2s,gap .2s;
 }
 .mlink .arrow{display:inline-block;transition:transform .2s}
 .mlink:hover{background:var(--green);color:#fff;gap:14px}
@@ -247,7 +275,7 @@ footer{border-top:1px solid var(--line);padding-block:30px 40px}
 .foot-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .foot-inner img{height:28px;width:auto;opacity:.85}
 .foot-links{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px}
-.foot-links a{color:var(--muted);text-decoration:none}
+.foot-links a{color:var(--muted);text-decoration:none;display:inline-block;padding-block:10px}
 .foot-links a:hover{color:var(--green)}
 .copy{font-size:13px;color:var(--muted)}
 
@@ -266,12 +294,11 @@ footer{border-top:1px solid var(--line);padding-block:30px 40px}
   .lang button{padding:6px 9px;font-size:12.5px}
   h1{max-width:100%}
   .store{flex:1 1 100%;justify-content:center}
-  /* The walkthrough is landscape. Preserve its full frame on phones
-     instead of cropping the app UI and text into a tall viewport. */
-  .stage{height:auto}
-  .video-card{height:auto;aspect-ratio:16 / 9}
-  .video-card video{object-fit:contain}
-  .hero > .wrap{padding-block:36px 28px}
+  .video-card{border-radius:14px}
+  .video-toggle{inset-block-end:8px;inset-inline-end:8px;padding:6px 11px;min-height:34px;font-size:12px}
+  .hero > .wrap:first-child{padding-block:32px 24px}
+  .hero-points{flex-direction:column;align-items:flex-start;width:fit-content;gap:9px}
+  .hero-points li{font-size:14.5px;text-align:start}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto}
@@ -284,7 +311,7 @@ footer{border-top:1px solid var(--line);padding-block:30px 40px}
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="logo" href="#top"><img src="assets/mta-logo.png" alt="MTA"></a>
+    <a class="logo" href="#top"><img src="assets/mta-logo.png" alt="MTA" width="419" height="111"></a>
 
     <div class="header-right">
       <nav>
@@ -305,18 +332,16 @@ footer{border-top:1px solid var(--line);padding-block:30px 40px}
 
   <!-- HERO -->
   <section class="hero">
-    <!-- HERO VIDEO -->
-    <div class="stage" aria-hidden="true">
-      <div class="video-card">
-        <video src="assets/mta-hero.mp4" poster="assets/mta-hero-poster.jpg"
-               autoplay muted loop playsinline preload="metadata"
-               aria-label="MTA app walkthrough"></video>
-      </div>
-    </div>
-
     <div class="wrap">
+      <div class="eyebrow"><span class="dot" aria-hidden="true"></span><span data-i18n="hero.eyebrow">No more calling shop after shop</span></div>
       <h1><span data-i18n="hero.h1a">Find the right spare part.</span> <span class="accent" data-i18n="hero.h1b">Faster.</span></h1>
       <p class="lede" data-i18n="hero.lede">Tell us what you need, choose your vehicle, add photos, and connect directly with suppliers who can help — without wasting time searching everywhere.</p>
+
+      <ul class="hero-points">
+        <li><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n="hero.pt1">One request with photos &amp; your car details</span></li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n="hero.pt2">Suppliers who stock it reply in chat</span></li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n-html="hero.pt3">Reach them directly on <bdi>WhatsApp</bdi></span></li>
+      </ul>
 
       <div class="stores" id="download">
         <a class="store" href="https://apps.apple.com/us/app/mta-%D7%A9%D7%95%D7%A7-%D7%97%D7%9C%D7%A7%D7%99-%D7%97%D7%99%D7%9C%D7%95%D7%A3-%D7%9C%D7%A8%D7%9B%D7%91/id6776418788" target="_blank" rel="noopener">
@@ -328,7 +353,22 @@ footer{border-top:1px solid var(--line);padding-block:30px 40px}
           <span><span class="small" data-i18n="store.playSmall">Get it on</span><span class="big">Google Play</span></span>
         </a>
       </div>
-      <p class="avail" data-i18n-html="hero.avail">Available on iOS &amp; Android</p>
+      <p class="avail" data-i18n-html="hero.avail">Available on iOS &amp; Android · Post your first request in under a minute</p>
+      <a class="hero-secondary" href="#how"><span data-i18n="hero.secondary">See how it works</span><span class="arrow-down" aria-hidden="true">↓</span></a>
+    </div>
+
+    <!-- HERO VIDEO: the app walkthrough, below the promise it proves -->
+    <div class="wrap stage">
+      <div class="video-card">
+        <video id="heroVideo" src="assets/mta-hero.mp4" poster="assets/mta-hero-poster.jpg"
+               width="1920" height="1080" autoplay muted loop playsinline preload="metadata"
+               aria-hidden="true"></video>
+        <button type="button" class="video-toggle" id="videoToggle" aria-pressed="false">
+          <svg class="i-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg>
+          <svg class="i-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11a.8.8 0 001.2.7l9-5.5a.8.8 0 000-1.4l-9-5.5A.8.8 0 004 2.5z"/></svg>
+          <span data-i18n="video.pause">Pause video</span>
+        </button>
+      </div>
     </div>
   </section>
 
@@ -355,15 +395,15 @@ footer{border-top:1px solid var(--line);padding-block:30px 40px}
         <article class="step">
           <div class="step-num">03</div>
           <h3 data-i18n="step3.h">Chat &amp; get it sorted</h3>
-          <p data-i18n="step3.p">Discuss the Supplier directly, receive messages and follow the request until it's handled.</p>
+          <p data-i18n="step3.p">Talk to the supplier directly, receive messages and follow the request until it's handled.</p>
         </article>
       </div>
 
       <div class="capabilities">
-        <span class="cap"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n="cap1">Text, image &amp; voice chat</span></span>
-        <span class="cap"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n="cap2">Push notifications</span></span>
-        <span class="cap"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n="cap4">Supplier profiles</span></span>
-        <span class="cap"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n-html="cap5">Direct <bdi>WhatsApp</bdi> contact</span></span>
+        <span class="cap"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n="cap1">Show the part with a photo or voice note</span></span>
+        <span class="cap"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n="cap2">Get notified the moment a supplier replies</span></span>
+        <span class="cap"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n="cap4">See who the supplier is before you chat</span></span>
+        <span class="cap"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><span data-i18n-html="cap5">Continue on <bdi>WhatsApp</bdi> in one tap</span></span>
       </div>
     </div>
   </section>
@@ -385,12 +425,12 @@ footer{border-top:1px solid var(--line);padding-block:30px 40px}
           <h3 data-i18n="buyers.h">For Buyers</h3>
           <p class="role-sub" data-i18n="buyers.sub">Need a spare part?</p>
           <ul class="mlist">
-            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="buyers.1">Create detailed requests</span></li>
-            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="buyers.2">Add vehicle information</span></li>
-            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="buyers.3">Upload photos of the part</span></li>
-            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="buyers.4">Chat directly with suppliers</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="buyers.1">Create detailed requests</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="buyers.2">Add vehicle information</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="buyers.3">Upload photos of the part</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="buyers.4">Chat directly with suppliers</span></li>
           </ul>
-          <a class="mlink" href="#download"><span data-i18n="buyers.cta">Find your part</span><span class="arrow">→</span></a>
+          <a class="mlink" href="#download"><span data-i18n="buyers.cta">Find your part</span><span class="arrow" aria-hidden="true">→</span></a>
         </article>
 
         <article class="mcard mcard--dark">
@@ -400,13 +440,13 @@ footer{border-top:1px solid var(--line);padding-block:30px 40px}
           <h3 data-i18n="sup.h">For Suppliers</h3>
           <p class="role-sub" data-i18n="sup.sub">Have spare parts to offer?</p>
           <ul class="mlist">
-            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.1">Discover relevant requests</span></li>
-            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.2">View full vehicle details</span></li>
-            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.3">Contact potential buyers</span></li>
-            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.4">Chat directly in the app</span></li>
-            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.5">Manage your opportunities</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.1">Discover relevant requests</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.2">View full vehicle details</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.3">Contact potential buyers</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.4">Chat directly in the app</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"/></svg><span data-i18n="sup.5">Manage your opportunities</span></li>
           </ul>
-          <a class="mlink" href="#download"><span data-i18n-html="sup.cta">Join MTA</span><span class="arrow">→</span></a>
+          <a class="mlink" href="#download"><span data-i18n-html="sup.cta">Join MTA</span><span class="arrow" aria-hidden="true">→</span></a>
         </article>
       </div>
     </div>
@@ -436,7 +476,7 @@ footer{border-top:1px solid var(--line);padding-block:30px 40px}
 
 <footer>
   <div class="wrap foot-inner">
-    <img src="assets/mta-logo.png" alt="MTA">
+    <img src="assets/mta-logo.png" alt="MTA" width="419" height="111" loading="lazy">
     <div class="foot-links">
       <a href="#how" data-i18n="nav.how">How it works</a>
       <a href="#market" data-i18n="nav.suppliers">For Suppliers</a>
@@ -454,17 +494,19 @@ const I18N = {
     "meta.title":"MTA — Find the right spare part. Faster.",
     "meta.desc":"Create a request for the spare part you need, connect directly with matching suppliers, and get the right part without wasting time searching everywhere.",
     "nav.how":"How it works","nav.suppliers":"For Suppliers","nav.download":"Download","nav.contact":"Contact",
-    "hero.eyebrow":"Your spare part is just a request away",
+    "hero.eyebrow":"No more calling shop after shop",
+    "hero.pt1":"One request with photos & your car details","hero.pt2":"Suppliers who stock it reply in chat","hero.pt3":"Reach them directly on <bdi>WhatsApp</bdi>",
+    "hero.secondary":"See how it works","video.pause":"Pause video","video.play":"Play video",
     "hero.h1a":"Find the right spare part.","hero.h1b":"Faster.",
     "hero.lede":"Tell us what you need, choose your vehicle, add photos, and connect directly with suppliers who can help — without wasting time searching everywhere.",
-    "hero.avail":"Available on <bdi>iOS</bdi> &amp; <bdi>Android</bdi>",
+    "hero.avail":"Available on <bdi>iOS</bdi> &amp; <bdi>Android</bdi> · Post your first request in under a minute",
     "store.appleSmall":"Download on the","store.playSmall":"Get it on",
     "how.kicker":"How <bdi>MTA</bdi> works","how.h2":"Find your part in 3 simple steps",
     "step1.h":"Create your request","step1.p":"Tell us what spare part you need, add your vehicle details, photos and city.",
     "step2.h":"Connect with suppliers","step2.p":"Your request reaches relevant spare-part suppliers who stock what you're looking for.",
-    "step3.h":"Chat & get it sorted","step3.p":"Discuss the Supplier directly, receive messages and follow the request until it's handled.",
-    "cap1":"Text, image & voice chat","cap2":"Push notifications",
-    "cap4":"Supplier profiles","cap5":"Direct <bdi>WhatsApp</bdi> contact",
+    "step3.h":"Chat & get it sorted","step3.p":"Talk to the supplier directly, receive messages and follow the request until it's handled.",
+    "cap1":"Show the part with a photo or voice note","cap2":"Get notified the moment a supplier replies",
+    "cap4":"See who the supplier is before you chat","cap5":"Continue on <bdi>WhatsApp</bdi> in one tap",
     "market.kicker":"The marketplace","market.h2":"One place. Buyers and suppliers.",
     "market.sub":"<bdi>MTA</bdi> connects the people looking for a part with the people who already have it on the shelf.",
     "buyers.h":"For Buyers","buyers.sub":"Need a spare part?",
@@ -484,17 +526,19 @@ const I18N = {
     "meta.title":"MTA — מצא את חלק החילוף הנכון. מהר יותר.",
     "meta.desc":"צור בקשה לחלק החילוף שאתה צריך, התחבר ישירות לספקים מתאימים וקבל את החלק הנכון בלי לבזבז זמן בחיפושים.",
     "nav.how":"איך זה עובד","nav.suppliers":"לספקים","nav.download":"הורדה","nav.contact":"צור קשר",
-    "hero.eyebrow":"החלק שאתה מחפש נמצא במרחק בקשה אחת",
+    "hero.eyebrow":"די להתקשר מחנות לחנות",
+    "hero.pt1":"בקשה אחת עם תמונות ופרטי הרכב שלך","hero.pt2":"ספקים שמחזיקים את החלק עונים בצ׳אט","hero.pt3":"פנייה ישירה אליהם ב<bdi>WhatsApp</bdi>",
+    "hero.secondary":"איך זה עובד","video.pause":"השהה סרטון","video.play":"הפעל סרטון",
     "hero.h1a":"מצא את חלק החילוף הנכון.","hero.h1b":"מהר יותר.",
     "hero.lede":"ספר לנו מה אתה צריך, בחר את הרכב שלך, הוסף תמונות, והתחבר ישירות לספקים שיכולים לעזור — בלי לבזבז זמן בחיפושים בכל מקום.",
-    "hero.avail":"זמין ב־<bdi>iOS</bdi> ו־<bdi>Android</bdi>",
+    "hero.avail":"זמין ב־<bdi>iOS</bdi> ו־<bdi>Android</bdi> · פרסם את הבקשה הראשונה שלך בפחות מדקה",
     "store.appleSmall":"הורד מ־","store.playSmall":"זמין ב־",
     "how.kicker":"איך <bdi>MTA</bdi> עובד","how.h2":"מצא את החלק שלך ב־3 שלבים פשוטים",
     "step1.h":"צור בקשה","step1.p":"ספר לנו איזה חלק חילוף אתה צריך, הוסף את פרטי הרכב, תמונות ועיר.",
     "step2.h":"התחבר לספקים","step2.p":"הבקשה שלך מגיעה לספקי חלקי חילוף רלוונטיים שמחזיקים את מה שאתה מחפש.",
     "step3.h":"שוחח וסגור עניין","step3.p":"דבר עם הספק ישירות, קבל הודעות ועקוב אחרי הבקשה עד לסגירתה.",
-    "cap1":"צ׳אט טקסט, תמונה וקול","cap2":"התראות בזמן אמת",
-    "cap4":"פרופילי ספקים","cap5":"יצירת קשר ישירה ב<bdi>WhatsApp</bdi>",
+    "cap1":"הראה את החלק בתמונה או בהודעה קולית","cap2":"קבל התראה ברגע שספק עונה",
+    "cap4":"דע מי הספק לפני שאתה משוחח","cap5":"המשך ב<bdi>WhatsApp</bdi> בלחיצה אחת",
     "market.kicker":"השוק","market.h2":"מקום אחד. קונים וספקים.",
     "market.sub":"<bdi>MTA</bdi> מחבר בין מי שמחפש חלק לבין מי שכבר מחזיק אותו על המדף.",
     "buyers.h":"לקונים","buyers.sub":"צריך חלק חילוף?",
@@ -514,17 +558,19 @@ const I18N = {
     "meta.title":"MTA — اعثر على قطعة الغيار المناسبة. أسرع.",
     "meta.desc":"أنشئ طلبًا لقطعة الغيار التي تحتاجها، وتواصل مباشرة مع الموردين المناسبين، واحصل على القطعة الصحيحة دون إضاعة الوقت في البحث.",
     "nav.how":"كيف يعمل","nav.suppliers":"للموردين","nav.download":"تحميل","nav.contact":"اتصل بنا",
-    "hero.eyebrow":"قطعة الغيار التي تبحث عنها على بُعد طلب واحد",
+    "hero.eyebrow":"لا مزيد من الاتصال بمحل تلو الآخر",
+    "hero.pt1":"طلب واحد مع الصور وتفاصيل سيارتك","hero.pt2":"الموردون الذين يملكون القطعة يردّون في الدردشة","hero.pt3":"تواصل معهم مباشرة عبر <bdi>WhatsApp</bdi>",
+    "hero.secondary":"شاهد كيف يعمل","video.pause":"إيقاف الفيديو مؤقتًا","video.play":"تشغيل الفيديو",
     "hero.h1a":"اعثر على قطعة الغيار المناسبة.","hero.h1b":"أسرع.",
     "hero.lede":"أخبرنا بما تحتاجه، واختر سيارتك، وأضف الصور، وتواصل مباشرة مع الموردين القادرين على مساعدتك — دون إضاعة الوقت في البحث في كل مكان.",
-    "hero.avail":"متوفر على <bdi>iOS</bdi> و<bdi>Android</bdi>",
+    "hero.avail":"متوفر على <bdi>iOS</bdi> و<bdi>Android</bdi> · انشر أول طلب لك في أقل من دقيقة",
     "store.appleSmall":"حمِّل من","store.playSmall":"احصل عليه من",
     "how.kicker":"كيف يعمل <bdi>MTA</bdi>","how.h2":"اعثر على قطعتك في 3 خطوات بسيطة",
     "step1.h":"أنشئ طلبك","step1.p":"أخبرنا بقطعة الغيار التي تحتاجها، وأضف تفاصيل مركبتك والصور والمدينة.",
     "step2.h":"تواصل مع الموردين","step2.p":"يصل طلبك إلى موردي قطع الغيار المعنيين الذين يوفرون ما تبحث عنه.",
     "step3.h":"تحدّث وأنجز الأمر","step3.p":"تحدّث مع المورد مباشرة، واستقبل الرسائل وتابع الطلب حتى إتمامه.",
-    "cap1":"دردشة نصية وصورية وصوتية","cap2":"إشعارات فورية",
-    "cap4":"ملفات الموردين","cap5":"تواصل مباشر عبر <bdi>WhatsApp</bdi>",
+    "cap1":"أرِ القطعة بصورة أو رسالة صوتية","cap2":"تنبيه فوري لحظة ردّ المورد",
+    "cap4":"اعرف من هو المورد قبل أن تتحدث معه","cap5":"أكمل عبر <bdi>WhatsApp</bdi> بلمسة واحدة",
     "market.kicker":"السوق","market.h2":"مكان واحد. مشترون وموردون.",
     "market.sub":"يربط <bdi>MTA</bdi> بين من يبحث عن قطعة ومن يملكها بالفعل على الرف.",
     "buyers.h":"للمشترين","buyers.sub":"هل تحتاج قطعة غيار؟",
@@ -563,6 +609,32 @@ function setLang(lang){
   document.querySelectorAll('.lang button').forEach(b=>{
     b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
   });
+  currentLang = lang;
+  syncVideoLabel();
+}
+
+/* ── Hero video: always pausable; never autoplays under reduced motion ── */
+let currentLang = 'en';
+const heroVideo = document.getElementById('heroVideo');
+const videoToggle = document.getElementById('videoToggle');
+function syncVideoLabel(){
+  if (!heroVideo || !videoToggle) return;
+  const dict = I18N[currentLang] || I18N.en;
+  const paused = heroVideo.paused;
+  videoToggle.setAttribute('aria-pressed', String(paused));
+  videoToggle.querySelector('[data-i18n]').textContent = paused ? dict['video.play'] : dict['video.pause'];
+}
+if (heroVideo && videoToggle){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    heroVideo.removeAttribute('autoplay');
+    heroVideo.pause();
+  }
+  videoToggle.addEventListener('click', ()=>{
+    if (heroVideo.paused) heroVideo.play(); else heroVideo.pause();
+  });
+  heroVideo.addEventListener('play', syncVideoLabel);
+  heroVideo.addEventListener('pause', syncVideoLabel);
+  syncVideoLabel();
 }
 
 document.querySelectorAll('.lang button').forEach(b=>{

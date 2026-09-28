@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — MTA</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon-64.png">
+<style>
+:root{--ink:#07110E;--green:#027A48;--green-dark:#01603A;--bg:#F7F9F8;--muted:#5C6B65}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans Arabic','Noto Sans Hebrew',sans-serif;
+  background:var(--bg);color:var(--ink);min-height:100svh;display:grid;place-items:center;padding:24px;text-align:center;line-height:1.5}
+main{max-width:34rem}
+img{height:34px;width:auto;margin:0 auto 32px;display:block}
+h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.03em;line-height:1.15}
+p{margin-top:14px;color:var(--muted);font-size:16.5px}
+p[lang]{font-size:15px;margin-top:6px}
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+a.btn{display:inline-flex;align-items:center;padding:12px 22px;border-radius:999px;font-weight:600;text-decoration:none}
+a.primary{background:var(--ink);color:#fff}
+a.primary:hover{background:var(--green)}
+a.ghost{color:var(--green-dark);border:1px solid #CFE0D7;background:#fff}
+a:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+  <a href="/"><img src="/assets/mta-logo.png" alt="MTA home" width="419" height="111"></a>
+  <h1>This page doesn't exist.</h1>
+  <p>The link may be old or mistyped. Your spare part is still one request away.</p>
+  <p lang="he" dir="rtl">הדף לא נמצא. החלק שלך עדיין במרחק בקשה אחת.</p>
+  <p lang="ar" dir="rtl">الصفحة غير موجودة. قطعتك ما زالت على بُعد طلب واحد.</p>
+  <div class="actions">
+    <a class="btn primary" href="/">Back to MTA home</a>
+    <a class="btn ghost" href="/#download">Download the app</a>
+  </div>
+</main>
+</body>
+</html>
